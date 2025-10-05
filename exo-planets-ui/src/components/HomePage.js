@@ -92,7 +92,7 @@ const HomePage = () => {
           <div className="image-container enhanced">
             <div className="image-wrapper">
               <img
-                src="/img/kepler.png"
+                src={`${process.env.PUBLIC_URL}/img/kepler.png`}
                 alt="Telescopio espacial Kepler"
                 className="telescope-img enhanced"
               />
