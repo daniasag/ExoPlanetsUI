@@ -391,7 +391,7 @@ const PredictionPage = () => {
                   <div className="result-item">
                     <span className="result-label">🎯 Predicción:</span>
                     <span className="result-value">
-                      {result.prediction === 1 && result.probability > 0.7 ? '🪐 ¡Exoplaneta detectado!' : '❌ No se detectó exoplaneta'}
+                      {result.probability > 0.6 ? '🪐 ¡Exoplaneta detectado!' : '❌ No se detectó exoplaneta'}
                     </span>
                   </div>
                   
