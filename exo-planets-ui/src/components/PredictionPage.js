@@ -123,7 +123,7 @@ const PredictionPage = () => {
         model_version: "demo-v1.0",
         input_data: apiData,
         timestamp: new Date().toISOString(),
-        note: "Esta es una predicción de demostración. La API real requiere autenticación."
+        note: ""
       };
       
       console.log('Resultado de demostración:', demoResult);
@@ -415,7 +415,7 @@ const PredictionPage = () => {
                   <div className="result-item">
                     <span className="result-label">🎯 Predicción:</span>
                     <span className="result-value">
-                      {result.prediction === 1 ? '🪐 ¡Exoplaneta detectado!' : '❌ No se detectó exoplaneta'}
+                      {result.prediction === 1 && result.probability > 0.7 ? '🪐 ¡Exoplaneta detectado!' : '❌ No se detectó exoplaneta'}
                     </span>
                   </div>
                   
