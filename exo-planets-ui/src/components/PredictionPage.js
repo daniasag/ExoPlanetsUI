@@ -29,91 +29,67 @@ const PredictionPage = () => {
     setResult(null);
 
     try {
-      // Preparar los datos con los nombres correctos de los campos
-      const apiData = {
-        period_day: parseFloat(formData.period_day),
-        duration_hours: parseFloat(formData.duration_hours),
-        rp_rearth: parseFloat(formData.rp_rearth),
-        rstar_rsun: parseFloat(formData.rstar_rsun),
-        mag: parseFloat(formData.mag),
-        teff_k: parseFloat(formData.teff_k)
-      };
+        // Preparar los datos con los nombres correctos de los campos
+        const apiData = {
+          period_days: parseFloat(formData.period_day),
+          duration_hours: parseFloat(formData.duration_hours),
+          rp_rearth: parseFloat(formData.rp_rearth),
+          rstar_rsun: parseFloat(formData.rstar_rsun),
+          mag: parseFloat(formData.mag),
+          teff_k: parseFloat(formData.teff_k)
+        };
 
       console.log('Enviando datos a la API:', apiData);
 
-      // Intentar múltiples enfoques de autenticación
-      const authAttempts = [
-        // Sin autenticación
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          name: 'Sin autenticación'
-        },
-        // Con Authorization Bearer
-        {
-          headers: {
+          // Usar la API real con el token proporcionado
+          const apiHeaders = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'Bearer demo-token'
-          },
-          name: 'Bearer token'
-        },
-        // Con X-API-Key
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-API-Key': 'demo-key'
-          },
-          name: 'X-API-Key'
-        },
-        // Con X-Auth-Token
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-Auth-Token': 'demo-token'
-          },
-          name: 'X-Auth-Token'
+            'X-API-Key': '022d85d6b0efbea31c75787ad13e20900238d68376375c84578a7dcbc4d720bd'
+          };
+
+      try {
+        console.log('Enviando datos a la API real con token...');
+        console.log('Headers:', apiHeaders);
+
+        const response = await fetch('https://exoplanetas-production.up.railway.app/predict', {
+          method: 'POST',
+          headers: apiHeaders,
+          body: JSON.stringify(apiData)
+        });
+
+        console.log('Respuesta de la API:', response.status, response.statusText);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('¡Éxito! Datos reales recibidos:', data);
+          
+          // Procesar la respuesta de la API real
+          const processedResult = {
+            prediction: data.prediction === "exoplanet" ? 1 : 0,
+            probability: data.proba ? Math.max(...data.proba) : 0.5,
+            confidence: data.proba ? Math.max(...data.proba) : 0.5,
+            model_version: "real-api-v1.0",
+            input_data: apiData,
+            timestamp: new Date().toISOString(),
+            raw_response: data
+          };
+          
+          setResult(processedResult);
+          return;
+        } else {
+          const errorData = await response.json();
+          console.log('Error de la API:', errorData);
+          throw new Error(`Error ${response.status}: ${errorData.detail || response.statusText}`);
         }
-      ];
-
-      let lastError = null;
-      
-      for (const attempt of authAttempts) {
-        try {
-          console.log(`Intentando con: ${attempt.name}`);
-          console.log('Headers:', attempt.headers);
-
-          const response = await fetch('https://exoplanetas-production.up.railway.app/predict', {
-            method: 'POST',
-            headers: attempt.headers,
-            body: JSON.stringify(apiData)
-          });
-
-          console.log(`Respuesta con ${attempt.name}:`, response.status, response.statusText);
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log('¡Éxito! Datos recibidos:', data);
-            setResult(data);
-            return; // Salir del bucle si es exitoso
-          } else {
-            const errorData = await response.json();
-            console.log(`Error con ${attempt.name}:`, errorData);
-            lastError = new Error(`Error ${response.status}: ${errorData.detail || response.statusText}`);
-          }
-        } catch (attemptError) {
-          console.log(`Error de red con ${attempt.name}:`, attemptError);
-          lastError = attemptError;
-        }
+      } catch (apiError) {
+        console.log('Error de la API real:', apiError);
+        throw apiError;
       }
 
-      // Si llegamos aquí, todos los intentos fallaron
-      // Mostrar modo de demostración
-      console.log('Todos los métodos de autenticación fallaron. Activando modo de demostración...');
+      // Si llegamos aquí, la API real falló
+      // Mostrar modo de demostración como respaldo
+      console.log('La API real falló. Activando modo de demostración...');
       
       // Simular una respuesta de demostración
       const demoResult = {
@@ -418,6 +394,18 @@ const PredictionPage = () => {
                       {result.prediction === 1 && result.probability > 0.7 ? '🪐 ¡Exoplaneta detectado!' : '❌ No se detectó exoplaneta'}
                     </span>
                   </div>
+                  
+                  {result.raw_response && (
+                    <div className="result-item">
+                      <span className="result-label">🔬 Análisis Detallado:</span>
+                      <span className="result-value">
+                        {result.raw_response.prediction === "exoplanet" ? 
+                          "🪐 Exoplaneta Confirmado" : 
+                          "❌ Falso Positivo"
+                        }
+                      </span>
+                    </div>
+                  )}
                   
                   <div className="result-item">
                     <span className="result-label">⚡ Confianza del modelo:</span>
