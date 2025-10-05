@@ -9,7 +9,7 @@ import React from "react";
 
 export default function SolarOrbitCuteTransit() {
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full h-screen overflow-visible bg-black">
       {/* Background with stars */}
       <div className="absolute inset-0">
         {Array.from({ length: 100 }).map((_, i) => (
@@ -32,7 +32,7 @@ export default function SolarOrbitCuteTransit() {
         <svg
           width="100%"
           height="100%"
-          viewBox="0 0 1200 700"
+          viewBox="0 0 1200 900"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
           aria-label="Sol con una cara sonriente y un planeta orbitando con carita frente a él"
@@ -55,7 +55,7 @@ export default function SolarOrbitCuteTransit() {
             {/* Orbit path */}
             <path
               id="orbitPath"
-              d="M 100 350 a 500 260 0 1 0 1000 0 a 500 260 0 1 0 -1000 0"
+              d="M 100 280 a 500 260 0 1 0 1000 0 a 500 260 0 1 0 -1000 0"
               fill="none"
               stroke="rgb(203, 203, 203)"
               strokeWidth="6"

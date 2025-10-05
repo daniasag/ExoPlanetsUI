@@ -8,7 +8,7 @@ import './components/Galaxy.css';
 function App() {
   return (
     <>
-      {/* 🌌 Fondo galáctico animado ocupa toda la pantalla */}
+      {/* fondo */}
       <div
   style={{
     position: 'fixed',
@@ -41,8 +41,8 @@ function App() {
         <div className="info-section">
           <p>
             Con telescopios como <strong>Kepler</strong>, <strong>K2</strong> y <strong>TESS</strong>,
-            se han descubierto miles de exoplanetas.
-          </p>
+            se han descubierto miles de exoplanetas.            
+          </p> 
 
           {/* Imagen del telescopio Kepler */}
           <div className="image-container">
@@ -79,6 +79,12 @@ function App() {
           <h1>Con los datos de estos telescopios, podemos entrenar modelos de Machine Learning</h1>
           <h1>¡para detectar exoplanetas que aún no han sido descubiertos!</h1>
         </div>
+        {/* Botón para buscar exoplanetas */}
+<div className="cta-section">
+  <button className="glow-button">
+    🚀 Buscar un ExoPlaneta
+  </button>
+</div>
       </div>
     </>
   );
