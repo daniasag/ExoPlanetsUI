@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ExoPlanetsUI/static/css/main.b1482206.css",
-    "main.js": "/ExoPlanetsUI/static/js/main.9c48cb43.js",
+    "main.js": "/ExoPlanetsUI/static/js/main.4c303125.js",
     "static/js/453.6ac22d2f.chunk.js": "/ExoPlanetsUI/static/js/453.6ac22d2f.chunk.js",
     "index.html": "/ExoPlanetsUI/index.html",
     "main.b1482206.css.map": "/ExoPlanetsUI/static/css/main.b1482206.css.map",
-    "main.9c48cb43.js.map": "/ExoPlanetsUI/static/js/main.9c48cb43.js.map",
+    "main.4c303125.js.map": "/ExoPlanetsUI/static/js/main.4c303125.js.map",
     "453.6ac22d2f.chunk.js.map": "/ExoPlanetsUI/static/js/453.6ac22d2f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b1482206.css",
-    "static/js/main.9c48cb43.js"
+    "static/js/main.4c303125.js"
   ]
 }
